@@ -1,0 +1,38 @@
+{% extends 'attendance/base.html' %}
+
+{% block content %}
+  <h1>Attendance Result</h1>
+  <form method="post">
+    {% csrf_token %}
+    <label for="class_name">Class Name:</label>
+    <input type="text" name="class_name" id="class_name">
+    <input type="text" name="session" id="session">
+    <input type="date" name="datee" id="datee">
+    <button type="submit">Get</button>
+  </form>
+  {% if attendances %}
+    <table>
+      <thead>
+        <tr>
+          <th>Student</th>
+          <th>Status</th>
+          <th>Class Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for attendance in attendances %}
+          <tr>
+            <td>{{ attendance.student }}</td>
+            {% if attendance.status == True %}
+            <td>Present</td>
+            {% else %}
+            <td>Absent</td>
+            {% endif %}
+            <td>{{ attendance.class_name }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+  <p><a href="/">Back home</a></p>
+{% endblock %}
